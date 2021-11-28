@@ -1,5 +1,6 @@
 import 'package:drift_dev/moor_generator.dart';
 import 'package:drift_dev/src/utils/string_escaper.dart';
+import 'package:drift_dev/src/writer/tables/updated_data_class_writer.dart';
 import 'package:drift_dev/src/writer/utils/override_toString.dart';
 import 'package:drift_dev/writer.dart';
 
@@ -67,6 +68,9 @@ class DataClassWriter {
     // And a serializer and deserializer method
     _writeFromJson();
     _writeToJson();
+
+    //gregdillon - added this method.
+    writeFromJsonStatic(_buffer, _runtimeOptions);
 
     // And a convenience method to copy data from this class.
     _writeCopyWith();
