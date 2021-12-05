@@ -67,34 +67,12 @@ extension FROMJSON on UpdateCompanionWriter{
 
       _buffer
         ..write('Value (')
-        ..write(dartName)
+        ..write("json['$dartName']")
         ..write('),');
     }
 
     _buffer.writeln(');\n}');
   }
-
-  // PersonalInformationTableCompanion toCompanion(bool nullToAbsent) {
-  //   return PersonalInformationTableCompanion(
-  //     id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-  //     first_name: first_name == null && nullToAbsent
-  //         ? const Value.absent()
-  //         : Value(first_name),
-  //     middle_name: middle_name == null && nullToAbsent
-  //         ? const Value.absent()
-  //         : Value(middle_name),
-  //     last_name: last_name == null && nullToAbsent
-  //         ? const Value.absent()
-  //         : Value(last_name),
-  //     date_of_birth: date_of_birth == null && nullToAbsent
-  //         ? const Value.absent()
-  //         : Value(date_of_birth),
-  //     contact_information: contact_information == null && nullToAbsent
-  //         ? const Value.absent()
-  //         : Value(contact_information),
-  //   );
-  // }
-
 
   void writeFromJson(_buffer, MoorTable table, Scope scope) {
     final serializerType = scope.nullableType('ValueSerializer');
