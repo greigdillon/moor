@@ -56,11 +56,10 @@ extension FROMJSON on UpdateCompanionWriter{
 
     for (final column in table.columns) {
 
-      print("${column.name} GENERATING--------------------------------");
-
       final getter = column.dartGetterName;
       final jsonKey = column.getJsonKey(scope.options);
       final type = column.dartTypeCode(scope.generationOptions);
+
 
       _buffer.write("$getter: Value.ofNullable(serializer.fromJson<$type>(json['$jsonKey'])),");
     }
