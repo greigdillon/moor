@@ -61,7 +61,7 @@ extension FROMJSON on UpdateCompanionWriter{
       final type = column.dartTypeCode(scope.generationOptions);
 
 
-      _buffer.write("$getter: Value.ofNullable(serializer.fromJson<$type>(json['$jsonKey'])),");
+      _buffer.write("$getter: Value(serializer.fromJson<$type>(json['$jsonKey'])),");
     }
 
     _buffer.write(');}\n');
