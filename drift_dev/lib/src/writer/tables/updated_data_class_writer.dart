@@ -1,6 +1,8 @@
 import 'package:drift_dev/src/model/types.dart';
 import 'package:drift_dev/src/writer/tables/data_class_writer.dart';
 import 'package:drift_dev/writer.dart';
+
+import '../../../moor_generator.dart';
 extension JsonStatic on DataClassWriter{
 
   void writeFromJsonStatic(_buffer, _runtimeOptions) {
@@ -37,7 +39,7 @@ extension JsonStatic on DataClassWriter{
 extension FROMJSON on UpdateCompanionWriter{
 
 
-  void writeFromJson(_buffer,table, Scope scope) {
+  void writeFromJson(_buffer, MoorTable table, Scope scope) {
     final serializerType = scope.nullableType('ValueSerializer');
     final _runtimeOptions = scope.generationOptions.writeForMoorPackage
         ? 'moorRuntimeOptions'
