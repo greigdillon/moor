@@ -53,6 +53,7 @@ extension FROMJSON on UpdateCompanionWriter{
 
     for (final column in table.columns) {
       final dartName = column.dartGetterName;
+      final jsonKey = column.getJsonKey(scope.options);
       _buffer
         ..write(dartName)
         ..write(': ');
@@ -60,14 +61,14 @@ extension FROMJSON on UpdateCompanionWriter{
       final needsNullCheck = column.nullable || !scope.generationOptions.nnbd;
       if (needsNullCheck) {
         _buffer
-          ..write("json['$dartName']")
+          ..write("json['$jsonKey']")
           ..write(' == null && nullToAbsent ? const Value.absent() : ');
         // We'll write the non-null case afterwards
       }
 
       _buffer
         ..write('Value (')
-        ..write("json['$dartName']")
+        ..write("json['$jsonKey']")
         ..write('),');
     }
 
