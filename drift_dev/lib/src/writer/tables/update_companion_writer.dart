@@ -2,6 +2,7 @@ import 'package:drift_dev/moor_generator.dart';
 import 'package:drift_dev/src/utils/string_escaper.dart';
 import 'package:drift_dev/src/writer/utils/override_toString.dart';
 import 'package:drift_dev/writer.dart';
+import 'updated_data_class_writer.dart';
 
 class UpdateCompanionWriter {
   final MoorTable table;
@@ -22,6 +23,7 @@ class UpdateCompanionWriter {
     _writeConstructor();
     _writeInsertConstructor();
     _writeCustomConstructor();
+    writeFromJson(_buffer,table,scope);
 
     _writeCopyWith();
     _writeToColumnsOverride();
