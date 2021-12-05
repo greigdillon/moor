@@ -39,6 +39,63 @@ extension JsonStatic on DataClassWriter{
 extension FROMJSON on UpdateCompanionWriter{
 
 
+  void writeToCompanion(_buffer) {
+    final asTable = table as MoorTable;
+
+    _buffer
+      ..write(asTable.getNameForCompanionClass(scope.options))
+      ..write(' toCompanion(Map<String,dynamic> json, {bool nullToAbsent = true}) {\n');
+
+    _buffer
+      ..write('return ')
+      ..write(asTable.getNameForCompanionClass(scope.options))
+      ..write('(');
+
+    for (final column in table.columns) {
+      final dartName = column.dartGetterName;
+      _buffer
+        ..write(dartName)
+        ..write(': ');
+
+      final needsNullCheck = column.nullable || !scope.generationOptions.nnbd;
+      if (needsNullCheck) {
+        _buffer
+          ..write("json['$dartName']")
+          ..write(' == null && nullToAbsent ? const Value.absent() : ');
+        // We'll write the non-null case afterwards
+      }
+
+      _buffer
+        ..write('Value (')
+        ..write(dartName)
+        ..write('),');
+    }
+
+    _buffer.writeln(');\n}');
+  }
+
+  // PersonalInformationTableCompanion toCompanion(bool nullToAbsent) {
+  //   return PersonalInformationTableCompanion(
+  //     id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+  //     first_name: first_name == null && nullToAbsent
+  //         ? const Value.absent()
+  //         : Value(first_name),
+  //     middle_name: middle_name == null && nullToAbsent
+  //         ? const Value.absent()
+  //         : Value(middle_name),
+  //     last_name: last_name == null && nullToAbsent
+  //         ? const Value.absent()
+  //         : Value(last_name),
+  //     date_of_birth: date_of_birth == null && nullToAbsent
+  //         ? const Value.absent()
+  //         : Value(date_of_birth),
+  //     contact_information: contact_information == null && nullToAbsent
+  //         ? const Value.absent()
+  //         : Value(contact_information),
+  //   );
+  // }
+
+
   void writeFromJson(_buffer, MoorTable table, Scope scope) {
     final serializerType = scope.nullableType('ValueSerializer');
     final _runtimeOptions = scope.generationOptions.writeForMoorPackage

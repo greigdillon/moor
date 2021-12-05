@@ -23,7 +23,8 @@ class UpdateCompanionWriter {
     _writeConstructor();
     _writeInsertConstructor();
     _writeCustomConstructor();
-    writeFromJson(_buffer,table,scope);
+    writeToCompanion(_buffer);
+    // writeFromJson(_buffer,table,scope);
 
     _writeCopyWith();
     _writeToColumnsOverride();
