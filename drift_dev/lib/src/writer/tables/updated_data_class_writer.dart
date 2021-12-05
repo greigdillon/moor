@@ -46,10 +46,11 @@ extension FROMJSON on UpdateCompanionWriter{
         : 'driftRuntimeOptions';
 
     final dataClassName = table.getNameForCompanionClass(scope.options);
+    final className = table.dartTypeName;
 
     _buffer
-      ..write('factory $dataClassName.fromJson('
-          'Map<String, dynamic> json, {$serializerType serializer}'
+      ..write('factory $dataClassName.fromData('
+          '$className json, {$serializerType serializer}'
           ') {\n')
       ..write('serializer ??= $_runtimeOptions.defaultSerializer;\n')
       ..write('return $dataClassName(');
@@ -61,7 +62,7 @@ extension FROMJSON on UpdateCompanionWriter{
       final type = column.dartTypeCode(scope.generationOptions);
 
 
-      _buffer.write("$getter: Value(json['$jsonKey']),");
+      _buffer.write("$getter: Value(json.'$jsonKey'),");
     }
 
     _buffer.write(');}\n');
